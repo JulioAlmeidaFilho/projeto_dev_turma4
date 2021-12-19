@@ -73,7 +73,6 @@ variable "vpcId" {
 
 variable "amiId" {
   type        = string
-  default = "
 }
 
 variable "subnetPrivada" {
