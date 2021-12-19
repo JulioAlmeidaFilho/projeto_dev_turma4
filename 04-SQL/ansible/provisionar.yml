@@ -1,8 +1,8 @@
 - hosts: 
-  - ec2-mysql-stage
+  - ec2-mysql-stag
   tasks:
-    - name: "Configura hostname ec2-mysql-stage"
-      shell: hostname ec2-mysql-stage && echo "ec2-mysql-stage" > /etc/hostname
+    - name: "Configura hostname ec2-mysql-stag"
+      shell: hostname ec2-mysql-stag && echo "ec2-mysql-stag" > /etc/hostname
       become: yes
 # ---
 - hosts: all
