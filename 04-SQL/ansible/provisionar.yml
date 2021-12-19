@@ -1,0 +1,75 @@
+- hosts: all
+  environment:
+    PASSWORD: "{{ lookup('env', 'DB_PASSWORD') }}"
+
+  tasks:
+    - name: "Roda: sudo apt update"
+      become: yes
+      apt:
+        update_cache: yes
+        #upgrade: yes
+
+    - name: "Instala pacotes"
+      apt:
+        name: "{{ item }}"
+        state: latest
+      become: yes
+      with_items:
+        - mysql-server
+        - python3-pycurl
+        - python3-mysqldb
+
+
+    - name: "Lavanta serviço do mysql"
+      become: yes
+      service:
+        name: mysql
+        state: started
+    
+    - name: "Alterando senha usuario SQL"
+      become: yes
+      mysql_user:
+        name: "root"
+        host_all: true
+        password: "{{ lookup('env', 'DB_PASSWORD') }}"
+        priv: "*.*:ALL,GRANT"
+        state: present
+        check_implicit_admin: true
+
+    - name: "Create user"
+      become: yes
+      mysql_user:
+        name: "root"
+        password: "{{ lookup('env', 'DB_PASSWORD') }}"
+        host_all: true
+        state: present
+        priv: "*.*:ALL,GRANT"
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    - name: "Tornando senha nova visivel para o Ansible"
+      become: yes
+      copy:
+        src: "dumpsql/.my.cnf"
+        dest: "/root/.my.cnf"
+        owner: root
+        mode: 0600
+
+    - name: "Libera acesso MySQL"
+      become: yes
+      lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '^bind-address'
+        line: 'bind-address = 0.0.0.0'
+    
+    - name: "Libera acesso MySQL"
+      become: yes
+      lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '^mysqlx-bind-address'
+        line: 'mysqlx-bind-address = 0.0.0.0'
+    
+    - name: "Restart do serviço do mysql"
+      become: yes
+      service:
+        name: mysql
+        state: restarted

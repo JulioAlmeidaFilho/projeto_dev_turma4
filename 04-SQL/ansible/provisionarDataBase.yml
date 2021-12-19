@@ -1,0 +1,20 @@
+- hosts: all
+  environment:
+    PASSWORD: "{{ lookup('env', 'DB_PASSWORD') }}"
+
+  tasks:
+    - name: "Cria o banco de dados MySQL"
+      become: yes
+      mysql_db:
+        name: SpringWebYoutubeTest
+        login_user: "root"
+        login_password: "{{ lookup('env', 'DB_PASSWORD') }}"
+        state: present
+        
+    - name: "Copia Arquivo Dump SQL"
+      copy:
+        src: "dumpsql/dumpsql.sql"
+        dest: "/tmp/dumpsql.sql"
+    
+    - name: "Copia Dump para MySQL"
+      shell: "mysql -u root -p\"{{ lookup('env', 'DB_PASSWORD') }}\" < /tmp/dumpsql.sql"
