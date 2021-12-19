@@ -22,11 +22,11 @@ echo "Aguardando criação de maquinas ..."
 sleep 10 # 10 segundos
 
 echo "[ec2-mysql-stag]" > ../ansible/hosts
-#echo "$(terraform output | grep mysql_instance_dev | awk '{print $2;exit}' | sed -e "s/\",//g")" >> ../ansible/hosts
-#echo "[ec2-mysql-stag]" >> ../ansible/hosts
+echo "$(terraform output | grep mysql_instance_dev | awk '{print $2;exit}' | sed -e "s/\",//g")" >> ../ansible/hosts
+echo "[ec2-mysql-stag]" >> ../ansible/hosts
 echo "$(terraform output | grep mysql_instance_stag | awk '{print $2;exit}' | sed -e "s/\",//g")" >> ../ansible/hosts
-#echo "[ec2-mysql-prod]" >> ../ansible/hosts
-#echo "$(terraform output | grep mysql_instance_prod | awk '{print $2;exit}' | sed -e "s/\",//g")" >> ../ansible/hosts
+echo "[ec2-mysql-prod]" >> ../ansible/hosts
+echo "$(terraform output | grep mysql_instance_prod | awk '{print $2;exit}' | sed -e "s/\",//g")" >> ../ansible/hosts
 
 sleep 10 # 10 segundos
 cd ../ansible
