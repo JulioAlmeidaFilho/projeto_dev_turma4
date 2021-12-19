@@ -41,6 +41,7 @@ ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts provisionar.yml -u ubu
 echo "Executando ansible ::::: [ ansible-playbook -i hosts provisionarDataBase.yml -u ubuntu --private-key /var/lib/jenkins/.ssh/id_rsa]"
 ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts provisionarDataBase.yml -u ubuntu --private-key /var/lib/jenkins/.ssh/id_rsa
 
+# Limpar a Senha Digitada
 echo "[client]" > dumpsql/.my.cnf
 echo "user=root" >> dumpsql/.my.cnf
 echo "password=" >> dumpsql/.my.cnf
