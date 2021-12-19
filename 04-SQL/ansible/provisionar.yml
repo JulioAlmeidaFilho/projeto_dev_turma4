@@ -32,16 +32,6 @@
       service:
         name: mysql
         state: started
-    
-    - name: "Alterando senha usuario SQL"
-      become: yes
-      mysql_user:
-        name: "root"
-        host_all: true
-        password: "{{ lookup('env', 'DB_PASSWORD') }}"
-        priv: "*.*:ALL,GRANT"
-        state: present
-        check_implicit_admin: true
 
     - name: "Tornando senha nova visivel para o Ansible"
       become: yes
