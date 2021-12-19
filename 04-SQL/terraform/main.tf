@@ -20,7 +20,7 @@ resource "aws_instance" "mysql_instance-stag" {
 }
 
 resource "aws_security_group" "mysql-sgStag" {
-  name        = "mysql-sgStag2"
+  name        = "mysql-sgStag"
   description = "acessos inbound traffic"
   vpc_id      = "${var.vpcId}"
   ingress = [
@@ -61,7 +61,7 @@ resource "aws_security_group" "mysql-sgStag" {
     }
   ]
   tags = {
-    Name = "mysql-sgStag2"
+    Name = "mysql-sgStag"
   }
 }
 

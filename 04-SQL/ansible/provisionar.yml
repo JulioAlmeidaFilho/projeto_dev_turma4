@@ -54,7 +54,14 @@
         path: /etc/mysql/mysql.conf.d/mysqld.cnf
         regexp: '^mysqlx-bind-address'
         line: 'mysqlx-bind-address = 0.0.0.0'
-        
+
+    - name: "Libera acesso MySQL"
+      become: yes
+      lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '^port'
+        line: 'port = 3306'
+
     - name: "Restart mysql"
       become: yes
       shell: "service mysql restart"
